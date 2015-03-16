@@ -21,7 +21,7 @@ program
         'Enable live reloading'
     .option '-i, --inject', 
         'Inject the live reload script into HTML (obviating the need for a live reloading browser plugin)'
-    .option '-c, --command', 
+    .option '-e, --exec', 
         'The command to execute when the watched directory has changed'
     .option '-t, --target', 
         'The make target to execute when the watched directory has changed [all]', 'all'
@@ -32,10 +32,11 @@ program
     .parse process.argv
 
 
-serveRoot = fs.path.join process.cwd(), program.args[0] or '.'
-watchRoot = fs.path.join process.cwd(), program.watch or program.args[0] or '.'
+here = _.partial fs.path.join, process.cwd()
+serveRoot = here program.args[0] or '.'
+watchRoot = here (if program.watch is true then '.' else program.watch or program.args[0])
 vendorRoot = fs.path.join __dirname, '../vendor'
-hasMakefile = fs.existsSync fs.path.join serveRoot, 'Makefile'
+hasMakefile = here 'Makefile'
 
 
 app = connect()
@@ -72,18 +73,19 @@ livereload = (server) ->
                     throw new Error "Unrecognized message command: #{message.command}"
 
     fs.watch watchRoot, (event, filename) ->
+        console.log filename, event
+
         reload = (path) ->
             if program.verbose
-                console.log "reloading #{path}"
+                console.log "reloading for #{path}"
 
-            console.log 'livereload.sockets', livereload.sockets.length
             for socket in livereload.sockets
                 socket.send JSON.stringify \
                     command: 'reload', 
                     path: path
 
-        if program.command or program.target
-            command = program.command or 'make #{program.target}'
+        if program.exec or program.target
+            command = program.exec or "make #{program.target}"
             exec command, (err, stdout, stderr) ->
                 console.log stdout
                 reload filename
