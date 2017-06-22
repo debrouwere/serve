@@ -379,7 +379,6 @@
         })(this),
         message: (function(_this) {
           return function(message) {
-            console.log(message);
             switch (message.command) {
               case 'reload':
                 return _this.performReload(message);
