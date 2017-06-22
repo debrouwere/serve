@@ -8,7 +8,7 @@
   },
   "bin": {
     "serve": "bin/serve"
-  }, 
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/debrouwere/serve.git"
@@ -19,23 +19,25 @@
   ],
   "author": {
     "name": "Stijn Debrouwere",
-    "email": "stijn@debrouwere.org", 
+    "email": "stijn@debrouwere.org",
     "url": "http://debrouwere.org"
-  }, 
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/debrouwere/serve/issues"
   },
   "homepage": "https://github.com/debrouwere/serve",
   "dependencies": {
-    "commander": "^2.3.0",
-    "connect": "^3.1.1",
+    "colors": "^1.1.2",
+    "commander": "2.9.x",
+    "connect": "3.6.x",
+    "colors": "1.1.x",
+    "connect-livereload": "0.6.x",
     "open": "0.0.5",
-    "connect-livereload": "^0.5.3",
-    "serve-index": "^1.2.0",
-    "serve-static": "^1.5.3",
-    "underscore": "^1.7.0",
-    "watch": "^0.11.0",
-    "ws": "^0.4.32"
+    "serve-index": "1.9.x",
+    "serve-static": "1.12.x",
+    "underscore": "1.8.x",
+    "watch": "1.0.x",
+    "ws": "3.0.x"
   }
 }
